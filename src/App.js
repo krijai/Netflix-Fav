@@ -3,16 +3,44 @@ import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom
 import axios from 'axios';
 import Dashboard from './components/Dashboard'
 import Signup from './components/Signup'
+import Login from './components/Login'
+import { getToken } from './services/tokenService';
 import './App.scss';
 
 class App extends Component {
 
   state = {
     user: null,
+    usersExist: null,
+  };
+
+  componentDidMount() {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser = async () => {
+    const token = getToken();
+    if(token) {
+      try {
+        const res = await axios.get('/user/current', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+          });
+          const user = res.data;
+          this.setUser({user});
+      } catch(e) {
+        console.error(e);
+      }
+    }
   };
 
   setUser = user => {
     this.setState({user});
+  };
+
+  setUserExist = userExist => {
+    this.setState({userExist});
   };
 
   render() {
@@ -26,10 +54,14 @@ class App extends Component {
             <Redirect to="/" />:
             <Signup setUser={this.setUser}/>
             }/>
+            <Route exact path="/login" render={()=>
+            this.state.user?
+            <Redirect to="/" /> :
+            <Login getCurrentUser={this.getCurrentUser}/>} />
             <Route exact path="/" render={()=>
             this.state.user?
             <Dashboard />:
-            <Dashboard />
+            <Redirect to="/login" />
             } />
           </Switch>
         </Router>

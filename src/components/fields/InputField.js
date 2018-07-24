@@ -18,19 +18,23 @@ class InputField extends Component {
   constructor(props){
     super(props);
   }
+  handleChange = e => {
+    console.log(e);
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
         <Input
+          onChange={this.props.handleChange}
           placeholder={this.props.placeholder}
           id={this.props.id}
           type={this.props.type}
           className={classes.input}
-          inputProps={{
-            'aria-label': 'Description',
-          }}
+          name={this.props.name}
+          autoFocus={true}
         />
       </div>
     );
