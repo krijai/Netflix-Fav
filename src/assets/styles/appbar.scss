@@ -1,0 +1,22 @@
+.appbar-wrapper {
+  background-color: rgba(0,0,0,1) !important;
+
+  .appbar-title {
+    font-size: 30px;
+    color: red;
+  }
+}
+
+.user-name {
+  display: block;
+  background-color: black;
+  color: #fff;
+  line-height: 1.5;
+  margin: 0;
+  padding: 10px;
+}
+
+.log-out-text {
+  text-align: center !important;
+  display: block !important;
+}

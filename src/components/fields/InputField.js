@@ -18,6 +18,13 @@ class InputField extends Component {
   constructor(props){
     super(props);
   }
+
+  state = {
+    error: {
+      email: null
+    }
+  }
+
   handleChange = e => {
     console.log(e);
     this.setState({ [e.target.name]: e.target.value });
@@ -35,6 +42,8 @@ class InputField extends Component {
           className={classes.input}
           name={this.props.name}
           autoFocus={true}
+          required={true}
+          // error={this.props.emailValidation?true:false}
         />
       </div>
     );

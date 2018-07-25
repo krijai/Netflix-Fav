@@ -1,20 +1,33 @@
 import React, { Component } from 'react'
 import InputField from '../components/fields/InputField'
 import Button from '../components/fields/Button'
+import { Link } from 'react-router-dom';
 import '../assets/styles/signup.scss'
 import Error from '../components/fields/Error'
 import axios from 'axios';
+import { setToken } from '../services/tokenService'
+
 
 export default class Signup extends Component {
   state = {
     email: "",
     password: "",
     phone: "",
-    errorMessage: ""
+    errorMessage: "",
+    // emailValidation: null
   };
 
   handleChange = e => {
     console.log(e.target.value, e.target.name);
+    // if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
+    //   this.setState({
+    //     emailValidation: 'Invalid email address'
+    //   })
+    // } else {
+    //   this.setState({
+    //     emailValidation: null
+    //   })
+    // }
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -27,12 +40,14 @@ export default class Signup extends Component {
       const res = await axios.post('/signup',{
         email:this.state.email, password:this.state.password, phone:this.state.phone
       })
-      console.log(res)
-      this.props.setUser(res.data);
+      if(res.data.message) {
+        setToken(res.data.token)
+        this.props.setUser(res.data);
+      } else {
+        this.setState({errorMessage: "User Already Exist, Please Select "})
+      }
     } catch(e){
       console.log(e);
-      this.setState({errorMessage: "User Already Exist, Please Select Login"})
-      console.log(this.state.errorMessage)
     }
   }
   render(){
@@ -67,6 +82,7 @@ export default class Signup extends Component {
           <Button type="submit" value="Submit"/>
         </form>
         {this.state.errorMessage?<Error message={this.state.errorMessage} />:''}
+        {this.state.errorMessage?<Link to="/login">Login</Link>:''}
       </div>
     )
   }

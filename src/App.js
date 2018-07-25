@@ -11,7 +11,6 @@ class App extends Component {
 
   state = {
     user: null,
-    usersExist: null,
   };
 
   componentDidMount() {
@@ -39,14 +38,10 @@ class App extends Component {
     this.setState({user});
   };
 
-  setUserExist = userExist => {
-    this.setState({userExist});
-  };
 
   render() {
     return (
       <div className="App">
-        <h1>NetFlix-Fav</h1>
         <Router>
           <Switch>
             <Route exact path="/signup" render={()=>
@@ -60,7 +55,7 @@ class App extends Component {
             <Login getCurrentUser={this.getCurrentUser}/>} />
             <Route exact path="/" render={()=>
             this.state.user?
-            <Dashboard />:
+            <Dashboard user={this.state.user} setUser={this.setUser}/>:
             <Redirect to="/login" />
             } />
           </Switch>
