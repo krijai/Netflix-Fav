@@ -1,0 +1,10 @@
+.tab-wrapper {
+  background-color: black !important;
+
+  .movies-tab,
+  .my-fav-tab,
+  & span {
+    width: 50% !important;
+    max-width: 100%;
+  }
+}

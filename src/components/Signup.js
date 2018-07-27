@@ -9,38 +9,30 @@ import { setToken } from '../services/tokenService'
 
 
 export default class Signup extends Component {
+
+
   state = {
     email: "",
     password: "",
     phone: "",
     errorMessage: "",
-    // emailValidation: null
   };
+
 
   handleChange = e => {
     console.log(e.target.value, e.target.name);
-    // if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
-    //   this.setState({
-    //     emailValidation: 'Invalid email address'
-    //   })
-    // } else {
-    //   this.setState({
-    //     emailValidation: null
-    //   })
-    // }
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value }
+    );
   };
 
   handleSubmit = async (e)=>{
     e.preventDefault();
-    console.log("submitted!");
-    const { email, password, phone } = this.state;
-
     try {
       const res = await axios.post('/signup',{
         email:this.state.email, password:this.state.password, phone:this.state.phone
       })
       if(res.data.message) {
+        console.log("submitted!");
         setToken(res.data.token)
         this.props.setUser(res.data);
       } else {
@@ -50,6 +42,7 @@ export default class Signup extends Component {
       console.log(e);
     }
   }
+
   render(){
     return(
       <div className="signup-form-wrapper">
@@ -81,8 +74,9 @@ export default class Signup extends Component {
           />
           <Button type="submit" value="Submit"/>
         </form>
+        <Link to="/login">Login</Link>
+
         {this.state.errorMessage?<Error message={this.state.errorMessage} />:''}
-        {this.state.errorMessage?<Link to="/login">Login</Link>:''}
       </div>
     )
   }

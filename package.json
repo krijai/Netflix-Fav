@@ -62,7 +62,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "server": "nodemon lib/server.js",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cd src && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd src && npm install --only=dev && npm install && npm run build",
+    "seeds": "node lib/seeds/index.js"
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {

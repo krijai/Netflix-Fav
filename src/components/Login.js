@@ -11,44 +11,31 @@ export default class Login extends Component {
     email: "",
     password: "",
     errorMessage: "",
-    // emailValidation: null
   };
 
   handleChange = e => {
     console.log(e.target.value, e.target.name);
-    // if(e.target.name == 'email') {
-    //   if (e.target.value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(e.target.value)) {
-    //     this.setState({
-    //       emailValidation: 'Invalid email address'
-    //     })
-    //   } else {
-    //     this.setState({
-    //       emailValidation: null
-    //     })
-    //   }
-    // }
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value }
+    );
   };
 
   handleSubmit = async (e)=>{
     e.preventDefault();
     console.log("submitted!");
-    const { email, password } = this.state;
-
-    try {
-      const res = await axios.post('/login',{
-        email:this.state.email, password:this.state.password
-      })
-      if(res.data.token){
-        setToken(res.data.token);
-        this.props.getCurrentUser();
+      try {
+        const res = await axios.post('/login',{
+          email:this.state.email, password:this.state.password
+        })
+        if(res.data.token){
+          setToken(res.data.token);
+          this.props.getCurrentUser();
+        }
+        else {
+          this.setState({errorMessage: "Your Username/Password is Incorrect, Note: We don't yet have Forget username/password feature, so try to remember your username/password, if not create a new gmail account and signup again. Thanks!"})
+        }
+      } catch(e){
+        console.error(e);
       }
-      else {
-        this.setState({errorMessage: "Your Username/Password is Incorrect, Note: We don't yet have Forget username/password feature, so try to remember your username/password, if not create a new gmail account and signup again. Thanks!"})
-      }
-    } catch(e){
-      console.error(e);
-    }
   }
 
   render(){
