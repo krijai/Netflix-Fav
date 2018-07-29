@@ -16,7 +16,7 @@ class Buttons extends Component {
   render() {
     return (
       <div>
-        <Button type={this.props.type} variant="outlined" color="primary" className={this.props.button}>
+        <Button type={this.props.type} variant="outlined" color="primary" className={this.props.button +' '+ this.props.className}>
           {this.props.value}
         </Button>
       </div>

@@ -54,15 +54,10 @@ class App extends Component {
   getFavList = async () => {
     const user = this.state.user;
     const user_id = (user.user._id).toString()
-    console.log(user)
-    console.log(this.state.user);
     const fav = await axios.get(`/movies/fav/:${user_id}`, async (req,res,next) => {
       return res.data
     });
-    console.log("get req")
-    console.log(fav)
     const favorite = fav.data;
-    console.log(favorite)
     this.setFav({favorite});
   }
 
@@ -76,11 +71,7 @@ class App extends Component {
   }
 
   setFav = fav => {
-    console.log("fav hit before")
-    console.log(fav)
     this.setState({fav});
-    console.log("fav hit after")
-    console.log(this.state.fav)
   };
 
   setMovies = movies => {
@@ -88,8 +79,6 @@ class App extends Component {
   };
 
   setUser = user => {
-    console.log("call setUser")
-    console.log(user)
     this.setState({user},()=>{
       if(user) {
         this.getFavList();

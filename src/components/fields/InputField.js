@@ -39,7 +39,7 @@ class InputField extends Component {
           placeholder={this.props.placeholder}
           id={this.props.id}
           type={this.props.type}
-          className={classes.input}
+          className={classes.input +' '+this.props.className}
           name={this.props.name}
           autoFocus={true}
           required={true}

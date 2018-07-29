@@ -4,6 +4,7 @@ import Button from '../components/fields/Button'
 import { Link } from 'react-router-dom';
 import '../assets/styles/signup.scss'
 import Error from '../components/fields/Error'
+import Divider from '@material-ui/core/Divider';
 import axios from 'axios';
 import { setToken } from '../services/tokenService'
 
@@ -36,45 +37,56 @@ export default class Signup extends Component {
         setToken(res.data.token)
         this.props.setUser(res.data);
       } else {
-        this.setState({errorMessage: "User Already Exist, Please Select "})
+        this.setState({errorMessage: "User Already Exist, Please try to login "})
       }
     } catch(e){
-      console.log(e);
+      this.setState({errorMessage: "Please Fill in some information"})
     }
   }
 
   render(){
     return(
       <div className="signup-form-wrapper">
-        <h1>Signup Page</h1>
+        <div className="signup-link-wrapper">
+          <h1>Netflix-Fav</h1>
+        </div>
+        <Divider className="divider-styles"/>
         <form onSubmit={this.handleSubmit}>
           <label for="email">Email:</label>
           <InputField 
           type="email"
           name="email"
           id="email"
-          placeholder="email"
+          placeholder="admin@netflix-fav.com"
           handleChange={this.handleChange}
+          className="input-field"
           />
           <label for="password">Password:</label>
           <InputField 
           type="password"
           name="password"
           id="password"
-          placeholder="password"
+          placeholder="****"
           handleChange={this.handleChange}
+          className="input-field"
           />
           <label for="phone">Phone:</label>
           <InputField 
           type="tel"
           name="phone"
           id="phone"
-          placeholder="phone"
+          placeholder="optional"
           handleChange={this.handleChange}
+          className="input-field"
           />
-          <Button type="submit" value="Submit"/>
+          <Button className="submit-btn" type="submit" value="Submit"/>
         </form>
-        <Link to="/login">Login</Link>
+        <p className="login-text">Already Have an Account?</p>
+        <Link to="/login">
+        
+        <Button className="submit-btn" value="Login"/>
+        
+        </Link>
 
         {this.state.errorMessage?<Error message={this.state.errorMessage} />:''}
       </div>

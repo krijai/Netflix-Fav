@@ -40,19 +40,31 @@ class MovieGridList extends Component {
     super(props);
   };
 
+  selectFav = (e) => {
+    console.log("selectFav hit")
+    console.log(e.currentTarget)
+    console.log([e.currentTarget.id])
+    this.props.handleClose
+    if(e.target.name === "id") {
+      console.log(e.target.name + e.target.value)
+    }
+
+
+  }
 
   render(){
     const { classes } = this.props;
-    // const movie_image = require(this.props.list.image)
-    // console.log(movie_image );
+
   return (
-    <div className={classes.root} onClick={this.props.handleOpen}>
+    <div className={classes.root} onClick={this.props.handleOpen} id="grid_list">
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
           <GridListTile key={this.props.key} cols={this.props.list.title ? 2 : 1} rows={this.props.list.title ? 2 : 1}>
             <img src={this.props.list.image} alt={this.props.list.title} />
             <GridListTileBar
               title={this.props.list.title}
               titlePosition="top"
+              onClick={this.selectFav}
+              id="fav_icon"
               actionIcon={
                 <IconButton className={classes.icon} onClick={() => {
                   var movie_id = this.props.list._id;

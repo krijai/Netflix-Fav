@@ -18,7 +18,9 @@ export default class Dashboard extends Component {
     myFav: null
   }
 
-  handleOpen = (index) => {
+  handleOpen = (index,e) => {
+    console.log("handleOpen e.currentTarget")
+    console.log(e.currentTarget)
     this.setState({ open: index });
   };
 
@@ -35,17 +37,12 @@ export default class Dashboard extends Component {
   }
 
   removeFromFav = async (movie_id) => {
-    console.log('removeFromFav function called')
     const user_id = this.props.user.user._id.toString();
-    console.log(user_id)
-    console.log(movie_id)
     const fav = await axios.delete('/movies/fav', {data:
       {
         movie_id:movie_id, user_id:user_id
       }
     });
-    console.log("delete request")
-    console.log(fav)
     this.setFavUpdate(fav);
   }
 
