@@ -19,8 +19,6 @@ export default class Dashboard extends Component {
   }
 
   handleOpen = (index,e) => {
-    console.log("handleOpen e.currentTarget")
-    console.log(e.currentTarget)
     this.setState({ open: index });
   };
 
@@ -33,30 +31,33 @@ export default class Dashboard extends Component {
     const fav = await axios.post('/movies/fav', {
       movie_id, user_id:user_id
     });
-    this.setFavUpdate(fav);
+    this.props.setFavUpdate(fav);
+    console.log("this.state.myFav");
+    console.log(this.state.myFav);
   }
 
   removeFromFav = async (movie_id) => {
     const user_id = this.props.user.user._id.toString();
+    console.log("removeFromFav Function Hit Before")
     const fav = await axios.delete('/movies/fav', {data:
       {
         movie_id:movie_id, user_id:user_id
       }
     });
-    this.setFavUpdate(fav);
-  }
-
-  setFavUpdate = (fav) => {
     this.props.setFavUpdate(fav);
   }
 
   render(){
     var list = 
     <div className="gridlist-container">
-      {this.props.movies.movies.map((list, key) => {
+      {this.props.movies.map((list, key) => {
+        
+        const isFavourited = this.props.fav.filter(favourite => list._id === favourite._movie_id).length > 0
+        console.log("isFavourited")
+        console.log(isFavourited)
         return(
           <div className="gridlist-content-wrapper">
-            <MovieGridList list={list} key={key} handleOpen={this.handleOpen.bind(this, key)} handleClose = {this.handleClose.bind(this)} addToFav={this.addToFav.bind(this)}/>
+            <MovieGridList list={list} key={key} isFavourited={isFavourited} fav={this.props.fav} handleOpen={this.handleOpen.bind(this, key)} handleClose = {this.handleClose.bind(this)} addToFav={this.addToFav.bind(this)} removeFromFav={this.removeFromFav.bind(this)}/>
             <MovieDetails list={list} open={this.state.open === key} handleOpen={this.handleOpen.bind(this)} handleClose = {this.handleClose.bind(this)}/>
           </div>
         )
@@ -67,17 +68,11 @@ export default class Dashboard extends Component {
     <div>
       {
         this.props.fav ?
-        this.props.fav.favorite.map((fav, key) => {
-        console.log("this.props.fav");
-        console.log(fav);
+        this.props.fav.map((fav, key) => {
 
       return (
-        this.props.movies.movies.map((movie) => {
-          console.log("fav movie before hit")
-          console.log(movie._id)
-          console.log(fav._movie_id)
+        this.props.movies.map((movie) => {
           if(movie._id == fav._movie_id) {
-            console.log("fav movie compare hit")
             return (
               <FavList movie={movie} >
                 <IconDelete movie={movie} removeFromFav={this.removeFromFav.bind(this)}/>

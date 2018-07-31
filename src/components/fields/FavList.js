@@ -21,9 +21,9 @@ class FavList extends Component {
             <Typography variant="title" color="inherit">
               {this.props.movie.title}
             </Typography>
-            <Typography >
+            <div >
               {this.props.children}
-            </Typography>
+            </div>
           </Toolbar>
         </AppBar>
       </div>

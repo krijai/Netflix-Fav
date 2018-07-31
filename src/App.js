@@ -11,8 +11,12 @@ class App extends Component {
 
   state = {
     user: null,
-    movies: null,
-    fav:null,
+    movies: {
+      movies: [],
+    },
+    fav: {
+      favorite: [],
+    },
     favUpdate:null
   };
 
@@ -66,7 +70,6 @@ class App extends Component {
       favUpdate:fav
     },()=>{
       this.getFavList();
-      this.forceUpdate();
     })
   }
 
@@ -103,7 +106,7 @@ class App extends Component {
             <Login getCurrentUser={this.getCurrentUser} />} />
             <Route exact path="/" render={()=>
             this.state.user ?
-            <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav}/>:
+            <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav.favorite}/>:
             <Redirect to="/login" />
             } />
           </Switch>

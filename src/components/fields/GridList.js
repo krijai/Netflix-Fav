@@ -6,6 +6,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import '../../assets/styles/gridlist.scss'
 
 const styles = theme => ({
   root: {
@@ -14,6 +15,7 @@ const styles = theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
+    cursor: 'pointer'
   },
   gridList: {
     width: 500,
@@ -28,6 +30,8 @@ const styles = theme => ({
   },
   icon: {
     color: 'white',
+    width: '30px',
+    height: '30px',
   },
 });
 
@@ -40,43 +44,40 @@ class MovieGridList extends Component {
     super(props);
   };
 
-  selectFav = (e) => {
-    console.log("selectFav hit")
-    console.log(e.currentTarget)
-    console.log([e.currentTarget.id])
-    this.props.handleClose
-    if(e.target.name === "id") {
-      console.log(e.target.name + e.target.value)
-    }
-
-
+  state = {
+    favColor: null
   }
 
   render(){
     const { classes } = this.props;
+    const favorite = this.props.isFavourited ? 'fav_color' : ''
 
   return (
     <div className={classes.root} onClick={this.props.handleOpen} id="grid_list">
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
           <GridListTile key={this.props.key} cols={this.props.list.title ? 2 : 1} rows={this.props.list.title ? 2 : 1}>
-            <img src={this.props.list.image} alt={this.props.list.title} />
+            <img  className="fav-icon-wrapper" src={this.props.list.image} alt={this.props.list.title} />
             <GridListTileBar
               title={this.props.list.title}
               titlePosition="top"
-              onClick={this.selectFav}
               id="fav_icon"
               actionIcon={
-                <IconButton className={classes.icon} onClick={() => {
+                <IconButton className={classes.icon+' '+ favorite} onClick={(event) => {
+                  event.stopPropagation()
                   var movie_id = this.props.list._id;
                   movie_id = movie_id.toString();
-                  this.props.addToFav(movie_id);
+                  if(this.props.isFavourited) {
+                    this.props.removeFromFav(movie_id);
+                  } else {
+                    this.props.addToFav(movie_id);
+                  }
                   }
                 }>
                   <StarBorderIcon />
                 </IconButton>
               }
               actionPosition="left"
-              className={classes.titleBar}
+              className={classes.titleBar +' '+'fav-icon-wrapper'}
             />
           </GridListTile>
       </GridList>

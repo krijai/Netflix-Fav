@@ -17,6 +17,7 @@ import Slide from '@material-ui/core/Slide';
 const styles = {
   appBar: {
     position: 'relative',
+    background: 'linear-gradient(to right, #000000 70%, #ff3300 100%)',
   },
   flex: {
     flex: 1,
@@ -54,7 +55,10 @@ class MovieDetails extends React.Component {
           </AppBar>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-md-4 order-1">
+                <p>Content Left</p>                
+              </div>
+              <div className="col-md-6 order-2">
                 <List>
                   <ListItem button>
                     <ListItemText primary="Genres:" secondary={this.props.list.genres} />
@@ -69,9 +73,6 @@ class MovieDetails extends React.Component {
                   </ListItem>
                   <Divider className="divider-wrapper"/>
                 </List>
-              </div>
-              <div className="col-lg-6">
-                <p>Content Right</p>
               </div>
             </div>
           </div>
