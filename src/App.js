@@ -25,10 +25,6 @@ class App extends Component {
     this.getCurrentUser();
   }
 
-  componentWillMount() {
-    this.getMoviesList();
-  }
-
 
   getCurrentUser = async () => {
     const token = getToken();
@@ -48,7 +44,11 @@ class App extends Component {
   };
 
   getMoviesList = async () => {
-    const mov = await axios.get('/movies',async (req,res,next) => {
+    console.log("rating call hit")
+    const user = this.state.user;
+    var user_id = user.user._id
+    user_id = user_id.toString();
+    const mov = await axios.get(`/movies/:${user_id}`,async (req,res,next) => {
       return res.data
     });
     const movies = mov.data;
@@ -61,6 +61,22 @@ class App extends Component {
     const fav = await axios.get(`/movies/fav/:${user_id}`, async (req,res,next) => {
       return res.data
     });
+    console.log("fav")
+    console.log(fav)
+    var fav_current_user = fav.data.filter( usr => 
+      
+      usr.user_ids.filter( user_id_filter =>{
+        user_id_filter.user_id !== user_id 
+      })
+    
+    );
+    console.log("fav_current_user")
+    console.log(fav_current_user)
+    var fav_filtered = fav_current_user.filter((fav)=> {
+      fav.user_id !== user_id
+    })
+
+    console.log(fav_filtered)
     const favorite = fav.data;
     this.setFav({favorite});
   }
@@ -84,6 +100,7 @@ class App extends Component {
   setUser = user => {
     this.setState({user},()=>{
       if(user) {
+        this.getMoviesList();
         this.getFavList();
       }
     });
@@ -106,7 +123,7 @@ class App extends Component {
             <Login getCurrentUser={this.getCurrentUser} />} />
             <Route exact path="/" render={()=>
             this.state.user ?
-            <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav.favorite}/>:
+            <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav.favorite} getMoviesList={this.getMoviesList}/>:
             <Redirect to="/login" />
             } />
           </Switch>

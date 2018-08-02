@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import { Icon } from 'antd';
 
 const styles = {
   appBar: {
@@ -70,6 +71,15 @@ class MovieDetails extends React.Component {
                   <Divider className="divider-wrapper"/>
                   <ListItem button>
                     <ListItemText primary="Description" secondary={this.props.list.description} />
+                  </ListItem>
+                  <Divider className="divider-wrapper"/>
+                  <ListItem button>
+                    <ListItemText primary="Rating" secondary={this.props.list.users_ratings_comments.map((usr_rating)=>{
+                      var emoji_icon = <Icon type={ usr_rating.rating<=2 ? "frown" : usr_rating.rating>2 && usr_rating.rating<=4 ? "meh" :"smile"} style={{ fontSize: 20, color:  usr_rating.rating<=2 ? "red" : usr_rating.rating>2 && usr_rating.rating<=4 ? "black" :"blue"  }} />
+                      var current_rating = usr_rating.rating + '/5'
+                      
+                      return [current_rating," ", emoji_icon]
+                    })}/>
                   </ListItem>
                   <Divider className="divider-wrapper"/>
                 </List>

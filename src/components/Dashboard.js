@@ -6,6 +6,7 @@ import MovieDetails from './fields/MovieDetails'
 import MainTabs from './fields/Tabs'
 import FavList from './fields/FavList'
 import IconDelete from './fields/Icon'
+import RateField from './antd-fields/RateField'
 import axios from 'axios';
 
 import '../assets/styles/appbar.scss'
@@ -47,6 +48,17 @@ export default class Dashboard extends Component {
     this.props.setFavUpdate(fav);
   }
 
+  updateRating = async (movie_id, user_id, rating) => {
+
+    const rate = await axios.post('/movies/rating', {
+      movie_id, user_id, rating
+    })
+
+    if(rate) {
+      this.props.getMoviesList()
+    }
+  }
+
   render(){
     var list = 
     <div className="gridlist-container">
@@ -58,6 +70,11 @@ export default class Dashboard extends Component {
         return(
           <div className="gridlist-content-wrapper">
             <MovieGridList list={list} key={key} isFavourited={isFavourited} fav={this.props.fav} handleOpen={this.handleOpen.bind(this, key)} handleClose = {this.handleClose.bind(this)} addToFav={this.addToFav.bind(this)} removeFromFav={this.removeFromFav.bind(this)}/>
+            
+            <RateField list={list} onChange= {(e)=>{
+              console.log(e.target) }
+            } updateRating={this.updateRating.bind(this)} user={this.props.user}/>
+
             <MovieDetails list={list} open={this.state.open === key} handleOpen={this.handleOpen.bind(this)} handleClose = {this.handleClose.bind(this)}/>
           </div>
         )
