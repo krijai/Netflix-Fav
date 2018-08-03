@@ -2,11 +2,18 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  height: 100vh;
+  height: 100%;
 
   .gridlist-content-wrapper {
     width: 200px;
-    height: 200px;
+    height: 100%;
+    margin-bottom: 10px;
+
+    @media (max-width: 771px) {
+      width: 250px;
+      margin: 0 auto;
+      display: block;
+    }
 
     ul {
       width:100%;

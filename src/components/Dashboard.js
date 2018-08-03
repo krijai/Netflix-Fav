@@ -7,6 +7,7 @@ import MainTabs from './fields/Tabs'
 import FavList from './fields/FavList'
 import IconDelete from './fields/Icon'
 import RateField from './antd-fields/RateField'
+import BackTopField from './antd-fields/BackTopField'
 import axios from 'axios';
 
 import '../assets/styles/appbar.scss'
@@ -108,6 +109,7 @@ export default class Dashboard extends Component {
       <div>
         <MenuAppBar user={this.props.user} setUser={this.props.setUser}/>
         <MainTabs list={list} myFav={myFav}/>
+        <BackTopField />
       </div>
     )
   }
