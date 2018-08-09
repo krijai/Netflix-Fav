@@ -8,6 +8,7 @@ import FavList from './fields/FavList'
 import IconDelete from './fields/Icon'
 import RateField from './antd-fields/RateField'
 import BackTopField from './antd-fields/BackTopField'
+import ModalField from './antd-fields/ModalField'
 import axios from 'axios';
 
 import '../assets/styles/appbar.scss'
@@ -60,6 +61,31 @@ export default class Dashboard extends Component {
     }
   }
 
+  updateComments = async (movie_id, user_id, comments) => {
+
+    const comment = await axios.post('/movies/comments', {
+      movie_id, user_id, comments
+    })
+
+    if(comment) {
+      this.props.getMoviesList()
+    }
+  }
+
+  removeComments = async (movie_id, user_id) => {
+    console.log('removeComments',movie_id,user_id)
+    const comment = await axios.delete('/movies/comments', {
+    data:
+        {
+      movie_id, user_id
+    }
+    })
+
+    if(comment) {
+      this.props.getMoviesList()
+    }
+  }
+
   render(){
     var list = 
     <div className="gridlist-container">
@@ -76,7 +102,9 @@ export default class Dashboard extends Component {
               console.log(e.target) }
             } updateRating={this.updateRating.bind(this)} user={this.props.user}/>
 
-            <MovieDetails list={list} open={this.state.open === key} handleOpen={this.handleOpen.bind(this)} handleClose = {this.handleClose.bind(this)}/>
+            <ModalField list={list}/>
+
+            <MovieDetails list={list} user={this.props.user} updateComments={this.updateComments.bind(this)} removeComments={this.removeComments.bind(this)} open={this.state.open === key} handleOpen={this.handleOpen.bind(this)} handleClose = {this.handleClose.bind(this)}/>
           </div>
         )
       })}

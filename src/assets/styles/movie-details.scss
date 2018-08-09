@@ -1,0 +1,27 @@
+.comments-wrapper {
+  padding-right: 0 !important;
+
+  .comments-text-area {
+    margin-bottom: 10px;
+  }
+
+  .text-field-icon-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    span {
+      font-size: 13px;
+    }
+
+    svg {
+      font-size: 20px;
+    }
+
+    button {
+      padding: 4px;
+      margin-right: 10px;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Dashboard from './components/Dashboard'
 import Signup from './components/Signup'
 import Login from './components/Login'
+import FourOFour from './components/FourOFour'
 import { getToken } from './services/tokenService';
 import './App.scss';
 
@@ -125,6 +126,9 @@ class App extends Component {
             this.state.user ?
             <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav.favorite} getMoviesList={this.getMoviesList}/>:
             <Redirect to="/login" />
+            } />
+            <Route exact path='*' render={()=>
+            <FourOFour />
             } />
           </Switch>
         </Router>
