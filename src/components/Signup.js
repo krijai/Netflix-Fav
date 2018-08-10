@@ -16,7 +16,7 @@ export default class Signup extends Component {
     email: "",
     password: "",
     phone: "",
-    errorMessage: "",
+    signupErrorMessage: "",
   };
 
 
@@ -37,10 +37,10 @@ export default class Signup extends Component {
         setToken(res.data.token)
         this.props.setUser(res.data);
       } else {
-        this.setState({errorMessage: "User Already Exist, Please try to login "})
+        this.setState({signupErrorMessage: "User Already Exist, Please try to login "})
       }
     } catch(e){
-      this.setState({errorMessage: "Please Fill in some information"})
+      this.setState({signupErrorMessage: "Please Fill in all the information"})
     }
   }
 
@@ -88,7 +88,7 @@ export default class Signup extends Component {
         
         </Link>
 
-        {this.state.errorMessage?<Error message={this.state.errorMessage} />:''}
+        {this.state.signupErrorMessage?<Error signupMessage={this.state.signupErrorMessage} />:''}
       </div>
     )
   }

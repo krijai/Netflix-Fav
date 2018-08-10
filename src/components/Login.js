@@ -12,7 +12,7 @@ export default class Login extends Component {
   state = {
     email: "",
     password: "",
-    errorMessage: "",
+    loginErrorMessage: "",
   };
 
   handleChange = e => {
@@ -33,7 +33,7 @@ export default class Login extends Component {
           this.props.getCurrentUser();
         }
         else {
-          this.setState({errorMessage: "Your Username/Password is Incorrect"})
+          this.setState({loginErrorMessage: "Your Username/Password is Incorrect"})
         }
       } catch(e){
         console.error(e);
@@ -69,7 +69,7 @@ export default class Login extends Component {
           />
           <Button className="submit-btn" type="submit" value="Submit"/>
         </form>
-        {this.state.errorMessage?<Error message={this.state.errorMessage} />:''}
+        {this.state.loginErrorMessage?<Error loginMessage={this.state.loginErrorMessage} />:''}
       </div>
     )
   }

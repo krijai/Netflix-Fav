@@ -18,6 +18,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TextAreaField from '../antd-fields/TextAreaField';
 import ButtonIcon from './ButtonIcon'
 import CardField from '../antd-fields/CardField'
+import SnackBarField from '../fields/SnackBarField'
 import '../../assets/styles/movie-details.scss'
 import { DEFAULT_ECDH_CURVE } from 'tls';
 import { isNull } from 'util';
@@ -91,9 +92,7 @@ class MovieDetails extends React.Component {
               <Typography variant="title" color="inherit" className={classes.flex}>
                 {this.props.list.title}
               </Typography>
-              <Button color="inherit" onClick={this.props.handleClose}>
-                save
-              </Button>
+              <SnackBarField message="Work in Progress" buttonText="Add to Chat" className="snackbar-btn"/>
             </Toolbar>
           </AppBar>
           <div className="container-fluid">
@@ -134,7 +133,14 @@ class MovieDetails extends React.Component {
                         this.props.list.users_ratings_comments.map((usr_comments) => {
                           var comments_text = usr_comments.comments !==null ? usr_comments.comments : null
                           if(comments_text && !this.state.edit) {
-                           return  <blockquote> {comments_text} </blockquote>
+                           return  <blockquote className="quote-box"> 
+                           <p class="quotation-mark">
+                            “
+                          </p>
+                          <p class="quote-text">
+                          {comments_text} 
+                          </p>
+                          </blockquote>
                           } else {
                               var default_value_check = Boolean(this.state.edit) && Boolean (usr_comments.comments) && !Boolean(this.state.delete)
                               console.log('default_value_check',default_value_check)

@@ -70,3 +70,48 @@
       line-height: 1.4;
     }
 }
+
+blockquote{
+  border-left:none
+}
+
+.quote-badge{
+  background-color: rgba(0, 0, 0, 0.2);   
+}
+
+.quote-box{
+  
+  overflow: hidden;
+  padding-top: -100px;
+  border-radius: 17px;
+  background-color: white;
+  color:rgba(0, 0, 0, 0.8);
+  width: 100%;
+  box-shadow: 2px 2px 2px 2px #E0E0E0;
+}
+
+.quotation-mark{
+  
+  margin-top: -10px;
+  font-weight: bold;
+  font-size:70px;
+  color:rgba(0, 152, 253, 0.8);
+  font-family: "Times New Roman", Georgia, Serif;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.quote-text{
+  font-size: 19px;
+  margin-top: -65px;
+  margin-left: 40px;
+  font-style: italic;
+}
+
+.snackbar-btn {
+  border: 1px solid rgba(0,0,0,0.54) !important;
+
+  span {
+    color: white
+  }
+}
