@@ -9,6 +9,7 @@ import IconDelete from './fields/Icon'
 import RateField from './antd-fields/RateField'
 import BackTopField from './antd-fields/BackTopField'
 import ModalField from './antd-fields/ModalField'
+import SearchField from './fields/SearchField'
 import axios from 'axios';
 
 import '../assets/styles/appbar.scss'
@@ -18,7 +19,8 @@ export default class Dashboard extends Component {
 
   state = {
     open: false,
-    myFav: null
+    myFav: null,
+    search: null
   }
 
   handleOpen = (index,e) => {
@@ -77,13 +79,18 @@ export default class Dashboard extends Component {
     const comment = await axios.delete('/movies/comments', {
     data:
         {
-      movie_id, user_id
-    }
+          movie_id, user_id
+        }
     })
 
     if(comment) {
       this.props.getMoviesList()
     }
+  }
+
+  searchHandleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value }
+    );
   }
 
   render(){
@@ -92,21 +99,37 @@ export default class Dashboard extends Component {
       {this.props.movies.map((list, key) => {
         
         const isFavourited = this.props.fav.filter(favourite => list._id === favourite._movie_id).length > 0
-        console.log("isFavourited")
-        console.log(isFavourited)
-        return(
-          <div className="gridlist-content-wrapper">
-            <MovieGridList list={list} key={key} isFavourited={isFavourited} fav={this.props.fav} handleOpen={this.handleOpen.bind(this, key)} handleClose = {this.handleClose.bind(this)} addToFav={this.addToFav.bind(this)} removeFromFav={this.removeFromFav.bind(this)}/>
-            
-            <RateField list={list} onChange= {(e)=>{
-              console.log(e.target) }
-            } updateRating={this.updateRating.bind(this)} user={this.props.user}/>
 
-            <ModalField list={list}/>
+        if (this.state.search) {
+          var search_string = this.state.search
+          search_string = search_string+""
+          search_string = search_string.toLowerCase().trim()
+          if(search_string === "") {
+            search_string = null
+          }
+          var isSearch = (list.title).toString().toLowerCase().trim().indexOf(search_string) !== -1
+        } else {
+          var isSearch = true
+        }
 
-            <MovieDetails list={list} user={this.props.user} updateComments={this.updateComments.bind(this)} removeComments={this.removeComments.bind(this)} open={this.state.open === key} handleOpen={this.handleOpen.bind(this)} handleClose = {this.handleClose.bind(this)}/>
-          </div>
-        )
+
+        if(isSearch) {
+          return(
+            <div className="gridlist-content-wrapper">
+              <MovieGridList list={list} key={key} isFavourited={isFavourited} fav={this.props.fav} handleOpen={this.handleOpen.bind(this, key)} handleClose = {this.handleClose.bind(this)} addToFav={this.addToFav.bind(this)} removeFromFav={this.removeFromFav.bind(this)}/>
+              <RateField list={list} onChange= {(e)=>{
+                console.log(e.target) }
+              } updateRating={this.updateRating.bind(this)} user={this.props.user} className="rating-field" />
+  
+              <ModalField list={list} className="watch-trailer-button"/>
+  
+              <MovieDetails list={list} user={this.props.user} updateComments={this.updateComments.bind(this)} removeComments={this.removeComments.bind(this)} open={this.state.open === key} handleOpen={this.handleOpen.bind(this)} handleClose = {this.handleClose.bind(this)}/>
+            </div> 
+          )
+        } else {
+          return(null)
+        }
+
       })}
     </div>
 
@@ -135,7 +158,8 @@ export default class Dashboard extends Component {
 
     return(
       <div>
-        <MenuAppBar user={this.props.user} setUser={this.props.setUser}/>
+        <MenuAppBar user={this.props.user} setUser={this.props.setUser} />
+        <SearchField className="search-bar" searchHandleChange={this.searchHandleChange} name="search"/>
         <MainTabs list={list} myFav={myFav}/>
         <BackTopField />
       </div>

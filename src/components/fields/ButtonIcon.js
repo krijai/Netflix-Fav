@@ -41,6 +41,7 @@ class ButtonIcon extends Component {
             
             this.props.updateComments(movie_id, user_id, comments)
             this.props.removeEdit()
+            this.props.removeDelete()
           } : this.props.icon === 'edit' && (this.props.list.users_ratings_comments.map((usr)=>{ 
             if(usr.comments) {
               return true
@@ -63,6 +64,7 @@ class ButtonIcon extends Component {
             
             this.props.removeComments(movie_id, user_id)
             this.props.setEdit()
+            this.props.setDelete()
           } :''
         }
         >

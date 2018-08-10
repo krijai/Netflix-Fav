@@ -25,3 +25,48 @@
     }
   }
 }
+
+.movie-details-card-image {
+  margin: 30px auto !important;
+  height: 450px;
+  width: 300px;
+  border: none;
+
+  @media (max-width: 772px) {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ant-card-cover {
+    width: 100%;
+    height: 100%;
+
+    @media (max-width: 772px) {
+      width: 200px;
+    }
+
+    img {
+      height: 100%;
+    }
+  }
+}
+
+.list-item-wrapper {
+  .list-item-text > span:first-child {
+      text-transform: uppercase;
+      font-size: 18px;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 500;
+      letter-spacing: 1px;
+      line-height: normal;
+      display: inline-block;
+      margin-bottom: 5px;
+      color: black;
+    }
+  .list-item-text > p {
+      font-size: 16px;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      letter-spacing: 1.2;
+      line-height: 1.4;
+    }
+}

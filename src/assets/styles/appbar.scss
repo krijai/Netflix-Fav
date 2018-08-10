@@ -20,3 +20,43 @@
   text-align: center !important;
   display: block !important;
 }
+
+.search-bar {
+margin-top: 3px !important;
+display: block !important;
+background-color: rgba(0,0,0,1) !important;
+margin: 0 !important;
+
+label {
+  color: rgba(225,225,225,0.8);
+  margin-left: 10px;
+  text-align: center;
+  display: block;
+}
+
+ div {
+  width: 100% !important;
+
+  &:hover {
+    border-color:red !important;
+  }
+
+  &:before {
+    border-bottom: 1px solid rgba(225,225,225,1) !important;
+  }
+ }
+
+  input {
+    color: rgba(225,225,225,1) !important;
+
+    &::-webkit-input-placeholder {
+      color: rgba(225,225,225,0.8);
+    }
+
+    &:-webkit-autofill {
+      color: rgba(225,225,225,0.8) !important;
+      background-color: transparent !important;
+
+    }
+  }
+}

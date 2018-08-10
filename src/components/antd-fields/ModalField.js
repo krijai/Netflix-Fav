@@ -27,7 +27,7 @@ class ModalField extends Component {
           this.setModal2Visible(true)
           this.startTrailer()
         }
-        }>Watch Trailer</Button>
+        } className={this.props.className}>Watch Trailer</Button>
         <Modal
           title={`${this.props.list.title} - Trailer`}
           centered

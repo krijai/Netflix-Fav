@@ -26,7 +26,7 @@ class RateField extends Component {
         const rating = e
 
         this.props.updateRating(movie_id, user_id, rating)
-      }}/>
+      }} className={this.props.className}/>
     )
   }
 }
