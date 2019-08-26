@@ -11,7 +11,8 @@ import Switch from '@material-ui/core/Switch';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { removeToken } from "../../services/tokenService";
-
+import Button from '../fields/Button';
+import { Link } from 'react-router-dom';
 
 const styles = {
   root: {
@@ -62,7 +63,7 @@ class MenuAppBar extends React.Component {
             <Typography variant="title" color="inherit" className={classes.flex +' '+'appbar-title'} >
               Netflix-Fav
             </Typography>
-            {auth && (
+            {this.props.user ? auth && (
               <div>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : null}
@@ -86,11 +87,26 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem className="user-name">{this.props.user.user.email}</MenuItem>
-                  <MenuItem className="log-out-text" onClick={this.logOut}>Logout</MenuItem>
+                  {
+                    this.props.user ?
+                    <div>
+                      <MenuItem className="user-name">{this.props.user.user.email}</MenuItem>
+                      <MenuItem className="log-out-text" onClick={this.logOut}>Logout</MenuItem>
+                    </div> :
+                    ''
+                  }
                 </Menu>
               </div>
-            )}
+            ) : 
+            <div className="nologin">
+              <Link to="/login">
+                <Button className="submit-btn" value="Login"/>
+              </Link>
+              <Link to="/signup">
+                <Button className="submit-btn" value="Sign Up"/>
+              </Link>
+          </div>
+        }
           </Toolbar>
         </AppBar>
       </div>

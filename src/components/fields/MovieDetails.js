@@ -40,13 +40,13 @@ function Transition(props) {
 class MovieDetails extends React.Component {
 
   state = {
-    comment: this.props.list.users_ratings_comments.map((usr)=>{
+    comment: this.props.list.users_ratings_comments ? this.props.list.users_ratings_comments.map((usr)=>{
       if(usr.comments) {
         return usr.comments
       } else {
         return null
       }
-    }),
+    }) : null,
     edit: false,
     delete: false
   }
@@ -116,7 +116,7 @@ class MovieDetails extends React.Component {
                   <Divider className="divider-wrapper"/>
                   <ListItem button className="list-item-wrapper">
                     <ListItemText primary="Rating" className="list-item-text" secondary={
-                      (this.props.list.users_ratings_comments).length > 0 ?
+                      this.props.list.users_ratings_comments && (this.props.list.users_ratings_comments).length > 0 ?
                       this.props.list.users_ratings_comments.map((usr_rating)=>{
                       var emoji_icon = <Icon type={ usr_rating.rating<=2 ? "frown" : usr_rating.rating>2 && usr_rating.rating<=4 ? "meh" :"smile"} style={{ fontSize: 20, color:  usr_rating.rating<=2 ? "red" : usr_rating.rating>2 && usr_rating.rating<=4 ? "black" :"blue"  }} />
                       var current_rating = usr_rating.rating + '/5'
@@ -129,7 +129,7 @@ class MovieDetails extends React.Component {
                     <ListItemText primary="Comments" className="list-item-text" secondary={
                     <div>
                       {
-                        (this.props.list.users_ratings_comments).length > 0 ?
+                        (this.props.list.users_ratings_comments) && ((this.props.list.users_ratings_comments).length > 0) ?
                         this.props.list.users_ratings_comments.map((usr_comments) => {
                           var comments_text = usr_comments.comments !==null ? usr_comments.comments : null
                           if(comments_text && !this.state.edit) {

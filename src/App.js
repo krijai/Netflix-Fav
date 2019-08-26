@@ -24,6 +24,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getCurrentUser();
+    this.getAllMovies();
   }
 
 
@@ -43,6 +44,14 @@ class App extends Component {
       }
     }
   };
+
+  getAllMovies = async () => {
+    const mov = await axios.get(`/movies`,async (req,res,next) => {
+      return res.data
+    });
+    const movies = mov.data;
+    this.setMovies({movies});
+  }
 
   getMoviesList = async () => {
     console.log("rating call hit")
@@ -113,23 +122,31 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
+
             <Route exact path="/signup" render={()=>
             this.state.user?
             <Redirect to="/" />:
             <Signup setUser={this.setUser} />
             }/>
+
             <Route exact path="/login" render={()=>
             this.state.user?
             <Redirect to="/" /> :
             <Login getCurrentUser={this.getCurrentUser} />} />
-            <Route exact path="/" render={()=>
+
+            {/* <Route exact path="/" render={()=>
             this.state.user ?
             <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav.favorite} getMoviesList={this.getMoviesList}/>:
             <Redirect to="/login" />
+            } /> */}
+            <Route exact path="/" render={() =>
+              <Dashboard user={this.state.user} setUser={this.setUser} movies={this.state.movies.movies} setFavUpdate={this.setFavUpdate} fav={this.state.fav.favorite} getMoviesList={this.getMoviesList}/>   
             } />
+
             <Route exact path='*' render={()=>
             <FourOFour />
             } />
+
           </Switch>
         </Router>
       </div>

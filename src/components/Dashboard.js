@@ -32,13 +32,15 @@ export default class Dashboard extends Component {
   };
 
   addToFav = async (movie_id) => {
-    const user_id = this.props.user.user._id.toString();
-    const fav = await axios.post('/movies/fav', {
-      movie_id, user_id:user_id
-    });
-    this.props.setFavUpdate(fav);
-    console.log("this.state.myFav");
-    console.log(this.state.myFav);
+    if(this.props.user) {
+      const user_id = this.props.user.user._id.toString();
+      const fav = await axios.post('/movies/fav', {
+        movie_id, user_id:user_id
+      });
+      this.props.setFavUpdate(fav);
+    } else {
+      alert("Login in use this feature")
+    }
   }
 
   removeFromFav = async (movie_id) => {
@@ -119,7 +121,7 @@ export default class Dashboard extends Component {
               <MovieGridList list={list} key={key} isFavourited={isFavourited} fav={this.props.fav} handleOpen={this.handleOpen.bind(this, key)} handleClose = {this.handleClose.bind(this)} addToFav={this.addToFav.bind(this)} removeFromFav={this.removeFromFav.bind(this)}/>
               <RateField list={list} onChange= {(e)=>{
                 console.log(e.target) }
-              } updateRating={this.updateRating.bind(this)} user={this.props.user} className="rating-field" />
+              } updateRating={this.updateRating.bind(this)} user={this.props.user} className="rating-field"/>
   
               <ModalField list={list} className="watch-trailer-button"/>
   

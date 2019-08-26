@@ -37,7 +37,7 @@ class SearchField extends React.Component {
     return (
         <TextField
           id="search"
-          label="What's the Movie name?"
+          label="Search For Movies Here"
           type="search"
           className={`${classes.textField} ${this.props.className}`}
           onChange={this.props.searchHandleChange}

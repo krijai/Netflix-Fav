@@ -6,7 +6,7 @@ class RateField extends Component {
 
   render() {
 
-    var ratings = this.props.list.users_ratings_comments.map((detail)=> {
+    var ratings = this.props.list.users_ratings_comments ? this.props.list.users_ratings_comments.map((detail)=> {
 
       if(detail.rating) {
         console.log('RateComponent',detail.rating.toFixed(1));
@@ -14,19 +14,27 @@ class RateField extends Component {
       } else {
         return 0
       }
-    })
+    }) : null
 
     ratings = parseFloat(ratings)
 
-    return(
-      <Rate allowHalf defaultValue={ratings} onChange={(e) =>{
-        const movie_id = this.props.list._id
-        var user_id = this.props.user.user._id
-        user_id = user_id.toString()
-        const rating = e
+    var disabled = this.props.user ? false : true;
+    console.log('disabled', disabled, this.props.user)
 
-        this.props.updateRating(movie_id, user_id, rating)
-      }} className={this.props.className}/>
+    return(
+      <Rate allowHalf defaultValue={ratings} disabled = {disabled} onChange={(e) => {
+        if(this.props.user) {
+          const movie_id = this.props.list._id
+          var user_id = this.props.user.user._id
+          user_id = user_id.toString()
+          const rating = e
+  
+          this.props.updateRating(movie_id, user_id, rating)
+        }else {
+          return alert("Login to add ratings for the movie");
+        }
+      }
+    } onKeyDown={() => alert("Login to add ratings for the movie")} className={this.props.className}/>
     )
   }
 }

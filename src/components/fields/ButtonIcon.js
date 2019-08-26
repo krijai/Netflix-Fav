@@ -30,14 +30,13 @@ class ButtonIcon extends Component {
     return (
         <Button variant="contained" color={this.props.color} className={this.props.button} 
         onClick={
-          this.props.icon === 'save' && (this.props.comments).length > 0 ?
+          this.props.user ?
+          (this.props.icon === 'save' && this.props.comments && (this.props.comments).length > 0 ?
           (e) =>{
             const movie_id = this.props.list._id
             var user_id = this.props.user.user._id
             user_id = user_id.toString()
             const comments = (this.props.comments).toString()
-
-            console.log('comments',comments)
             
             this.props.updateComments(movie_id, user_id, comments)
             this.props.removeEdit()
@@ -65,7 +64,9 @@ class ButtonIcon extends Component {
             this.props.removeComments(movie_id, user_id)
             this.props.setEdit()
             this.props.setDelete()
-          } :''
+          } :'') : (this.props.icon === 'save' || this.props.icon === 'edit' || this.props.icon === 'delete')
+          ? (e) => alert("login to add your comments")
+          : 'alert("login to add your comments")'
         }
         >
           {this.props.value}
