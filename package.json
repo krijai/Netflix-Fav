@@ -67,7 +67,7 @@
     "heroku-postbuild": "cd src && npm install --only=dev && npm install && npm run build",
     "seeds": "node lib/seeds/index.js"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:8080/",
   "devDependencies": {
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3"

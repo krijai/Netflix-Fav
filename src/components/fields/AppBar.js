@@ -90,7 +90,7 @@ class MenuAppBar extends React.Component {
                   {
                     this.props.user ?
                     <div>
-                      <MenuItem className="user-name">{this.props.user.user.email}</MenuItem>
+                      <MenuItem className="user-name">{this.props.user.email}</MenuItem>
                       <MenuItem className="log-out-text" onClick={this.logOut}>Logout</MenuItem>
                     </div> :
                     ''
